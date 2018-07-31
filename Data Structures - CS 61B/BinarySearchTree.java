@@ -8,6 +8,12 @@
 	   public Key ceiling (Key key): min  key value that >= key
 	5) public int rank(Key key): Return the number of keys in the symbol table strictly less than;
 	   public Key select(int k): Return the key in the symbol table whose rank is {@code k};
+
+	6) public void deleteMin()
+	   public void deleteMax()
+
+	7) public void delete(Key key)
+
 *
 *
 */
@@ -147,6 +153,64 @@ public class BST<Key extends Comparable<Key>, Value>{
 	public Key select(int k){
 		return select(root, k).key;
 	}
+
+
+	// deleteMin and deleteMax
+	prvivate Node deleteMin(Node x){
+		if(x.left == null) return x.right;
+		x.left = deleteMin(x.left);
+		x.size = size(x.left) + size(x.right) + 1;
+		return x;
+	}
+
+	public void deleteMin(){
+		if(isEmpty()) throw new NoSuchElementException("Symbol table underflow!");
+		root = deleteMin(root);		
+	}
+
+	private Node deleteMax(Node x){
+		if(x.right == null) return x.left;
+		x.right = deleteMax(x.right);
+		x.size = size(x.left) + size(x.right) + 1;
+		return x;
+	}
+
+	public void deleteMax(){
+		if(isEmpty()) throw new NoSuchElementException("Symbol table underflow!");
+		root = deleteMax(root);
+	}
+
+
+	// delete
+	private Node delete(Node x, Key key){
+		if(x == null) return null;
+
+		int cmp = key.compareTo(x.key);
+		if(cmp < 0) x.left = delete(x.left, key);
+		else if(cmp > 0) x.right = delete(x.righ, key);
+		else{
+			if(x.right == null) return x.left;
+			if(x.left == null) return x.right;
+			Node t = x;
+			x = min(x.right);
+			x.right = deleteMin(t.right);
+			x.left = t.right;
+		}
+		x.size = size(x.left) + size(x.right) + 1;
+		return x;
+	}
+
+	// delete node with no child: modify the parents' link;
+	// delete node with one child: the only child serves as the successor;
+	// delete node with two children: sucessor is the smallest in the right tree;
+
+	public void delete(Key key){
+		if (key == null) throw new IllegalArgumentException("calls delete() with a null key");
+		root = delete(root, key);		
+	}
+
+	
+
 
 
 	
