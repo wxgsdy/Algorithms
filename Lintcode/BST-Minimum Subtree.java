@@ -1,5 +1,37 @@
+// Description: find subtree with minimum sum 
+
+// traverse + Divide & Conquer
+class solution{
+
+	private TreeNode node = null;
+	private int minSum = Integer.MAX_VALUE;  
+
+	public TreeNode findSubtree(TreeNode root){
+		helper(root);
+		return node;
+	}
+
+	private int helper(TreeNode root){
+		if(root == null) return 0;
+
+		int left = helper(root.left);
+		int right = helper(root.right);
+		int sum = left + right + root.val;
+		if(sum < minSum){
+			node = root;
+			minSum = sum;
+		}
+		return sum;
+	}
+
+
+}
+
+
+
 // Divide and Conquer
-public Solution{
+class Solution{
+
 
 	private class resultType{
 		public TreeNode node;
@@ -13,65 +45,34 @@ public Solution{
 		}
 	}
 
-
-	public TreeNode findSubtree(TreeNode root){
-		return helper(root).node;
-	}
-
-	private resultType helper(TreeNode node){
-		if(TreeNode == null) return new resultType(null, Integer.MAX_VALUE, 0);
+	public TreeNode findSubtree(TreeNode root) {
+        return helper(root).node;
+    } 
 
 
-		// Divide
-		resultType left = helper(node.left);
-		resultType right = helper(node.right);
+    private resultType helper(Treenode root){
+    	if(root == null) return new resultType(null, 0, Integer.MAX_VALUE);
+    	
+    	// divide 
+    	resultType left = helper(root.left);
+    	resultType right = helper(root.right);
 
-		resultType res = new resultType(
-			node,
-			left.sum + right.sum + node.val,
-			left.sum + right.sum + node.val
-			);
+    	resultType res = new resultType(
+    		root,
+    		left.sum + right.sum + root.val,
+    		left.sum + right.sum + root.val    		
+    		)
 
-		if(left.minSum <= right.minSum){
-			res.minSum = left.minSum;
-			res.node = left.node;
-		}
+    	if(left.minSum <= right.minSum){
+    		res.node = left.node;
+    		res.minSum = left.minSum;
+    	}
 
-		if(right.minSum <= left.minSum){
-			res.minSum = right.minSum;
-			res.node = right.node;
-		}
+    	if(right.minSum <= left.minSum){
+    		res.node = right.node;
+    		res.minSum = right.minSum;
+    	}
 
-		return res;
-	}
-
-}
-
-
-// Traverse
-public Solution{
-
-	private TreeNode minSubtree = null;
-	private int minSum = Integer.MAX_VALUE;
-
-	public TreeNode findSubtree(TreeNode root){
-
-		helper(root);
-		return minSubtree;
-	}
-
-	private int helper(TreeNode node){
-		if(node === null) return 0;
-
-		int sum = helper(root.left) + helper(root.right) + root.val;
-		if(sum < minSum){
-			minSum = sum;
-			minSubtree = node;
-		}
-
-		return sum;
-
-
-
-	}
+    	return res;
+    }
 }
