@@ -12,7 +12,9 @@
 	6) public void deleteMin()
 	   public void deleteMax()
 
-	7) public void delete(Key key)
+	7) public void delete(Key key)；
+	8) public Iterable<Key> (Key lo, hi);
+	9) public int size(Key lo, Key hi): override;
 
 *
 *
@@ -209,6 +211,28 @@ public class BST<Key extends Comparable<Key>, Value>{
 		root = delete(root, key);		
 	}
 
+	private void keys(Node x, Queue<Key> queue, Key lo, Key hi){
+		// exit 
+		if(x == null) return;
+
+		int cmplo = lo.compareTo(x.key);
+		int cmphi = hi.compareTo(x.key);
+		if(cmplo < 0) keys(x.left, queue, lo,hi);
+		if(cmplo<=0 && cmphi >=0) queue.enqueue(x.key);
+		if(cmphi>0) keys(x.right, queue, lo, hi);
+	}
+
+	public Iterable<Key> keys(Key lo, Key hi){
+		Queue<Key> = new Queue<Key>;
+		keys(root, queue, lo, hi);
+		return queue;
+	}
+
+	public int size(Key lo, Key hi){
+		if(lo.compareTo(hi) > 0) return 0;
+		if(contains(hi)) return rank(hi) - rank(lo) + 1;
+		else return rank(hi) - rank(lo);
+	}
 	
 
 

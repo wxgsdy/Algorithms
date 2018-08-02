@@ -77,3 +77,79 @@ public class Solution {
         
     }
 }
+
+
+
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+
+public class Solution {
+    /*
+     * @param root: The root of the binary tree.
+     * @param A: A TreeNode
+     * @param B: A TreeNode
+     * @return: Return the LCA of the two nodes.
+     */
+     
+    private class resultType{
+        public boolean findA, findB;
+        public TreeNode lca;
+        public resultType(boolean findA, boolean findB, TreeNode lca){
+            this.findA = findA;
+            this.findB = findB;
+            this.lca= lca;
+        }
+    }
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode A, TreeNode B) {
+        
+        resultType res = helper(root, A, B);
+        if(res.findA && res.findB) return res.lca;
+        else return null;
+    }
+    
+    private resultType helper(TreeNode root, TreeNode A, TreeNode B){
+        if(root == null) return new resultType(false, false, null);
+        
+        // Divde 
+        resultType left = helper(root.left, A, B);
+        resultType right = helper(root.right, A, B);
+        
+        
+        // Conquer
+        boolean a_exsist = left.findA || right.findA || root == A;
+        boolean b_exsist = left.findB || right.findB || root == B;
+        
+        if(root == A || root == B) return new resultType(a_exsist, b_exsist, root);
+        if(left.lca != null && right.lca != null) return new resultType(a_exsist, b_exsist, root);
+        if(left.lca != null) return new resultType(a_exsist, b_exsist, left.lca);
+        if(right.lca != null) return new resultType(a_exsist, b_exsist, right.lca);
+        return new resultType(a_exsist, b_exsist, null);
+        
+    }
+    
+
+
+
