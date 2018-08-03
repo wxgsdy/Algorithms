@@ -3,6 +3,8 @@
 
  * **Linked List and Array:**
 
-   ​	<u>For Linked list</u>: Using  Dummy(or Sentinel) node can help avoid tons of corner cases;
+   ​	<u>For Linked list (LL)</u>:  Using  Dummy(or Sentinel) node can help avoid tons of corner cases;
 
-   ​	
+   ​	<u>For Arrays</u>:  Always sort them before other operations;
+
+
