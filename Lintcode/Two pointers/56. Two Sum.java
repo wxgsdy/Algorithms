@@ -79,3 +79,13 @@ public class Solution {
         return new int[]{};
     }
 }
+
+*  Comparator也可以写简单些
+
+Arrays.sort(pairs, new Comparator<Pair>(){
+            public int compare(Pair p1, Pair p2){
+                return p1.num - p2.num;
+            } 
+        });
+
+*  也可以不写 getValue 方法；
