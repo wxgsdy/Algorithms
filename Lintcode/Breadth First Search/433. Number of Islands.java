@@ -1,4 +1,3 @@
-
 public class Solution {
     /**
      * @param grid: a boolean 2D matrix
@@ -11,51 +10,50 @@ public class Solution {
             this.y = y;
         }
     }
+    
     public int numIslands(boolean[][] grid) {
         // write your code here
-        if(grid == null || grid.length == 0 || grid[0].length == 0 ) return 0;
+        if(grid == null || grid.length == 0 || grid[0].length == 0) return 0;
         
-        int n = grid.length;
-        int m = grid[0].length;
-        int islands = 0;
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j]) {
+        int count = 0;
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j]){
                     bfs(grid, i, j);
-                    islands++;
+                    count++;
                 }
             }
         }
-        
-        return islands;
+        return count;
     }
     
-    private void bfs(boolean[][] grid, int i, int j){
-        // grid[i][j] is true, bfs traverse to mark down all connected points
+    private void bfs(boolean[][] grid, int x, int y){
+        
+        // bfs int grid from (x,y) and mark 0 
         Queue<Coordinate> queue = new LinkedList<>();
-        queue.offer(new Coordinate(i,j));
-        grid[i][j] = false;
+        queue.offer(new Coordinate(x,y));
+        grid[x][y] = false;
         
-        int[] directionX = {0, 1, -1, 0};
-        int[] directionY = {1, 0, 0, -1};
+        int[] deltaX = new int[]{0, 1, -1, 0};
+        int[] deltaY = new int[]{1, 0, 0, -1};
         
-        while (!queue.isEmpty()) {
-            Coordinate coor = queue.poll();
-            for (int cnt = 0; cnt < 4; cnt++) {
-                Coordinate adj = new Coordinate(
-                    coor.x + directionX[cnt],
-                    coor.y + directionY[cnt]
-                );
-                if (!inBound(grid, adj)) {
-                    continue;
+        while(! queue.isEmpty()){
+            Coordinate temp = queue.poll();
+            
+            for(int index = 0; index < 4; index++){
+                Coordinate newCoor = new Coordinate( temp.x + deltaX[index],
+                                                     temp.y + deltaY[index]);
+                if(!inBound(grid, newCoor)) continue;
+                if(grid[newCoor.x][newCoor.y]){
+                    queue.offer(newCoor);
+                    grid[newCoor.x][newCoor.y] = false;
                 }
-                if (grid[adj.x][adj.y]) {
-                    grid[adj.x][adj.y] = false;
-                    queue.offer(adj);
-                }
+                
             }
+            
+        
         }
+        
         
     }
     
