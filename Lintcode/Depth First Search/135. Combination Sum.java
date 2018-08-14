@@ -1,33 +1,39 @@
 public class Solution {
-    public  List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (candidates == null) return result;
+    /**
+     * @param candidates: A list of integers
+     * @param target: An integer
+     * @return: A list of lists of integers
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        // write your code here
+        List<List<Integer>> results = new ArrayList<>();
+        if(candidates == null || candidates.length == 0) return results;
         
-        List<Integer> combination = new ArrayList<>();
         Arrays.sort(candidates);
-        dfs(candidates, 0, target, combination, result);
-
-        return result;
+        bfsHelper(candidates, 0, target, new ArrayList<Integer>(), results);
+        return results;
     }
-
-     void dfs(int[] candidates,
-                 int startIndex,
-                 int remainTarget,
-                 List<Integer> combination,
-                 List<List<Integer>> result) {
-                     
-        if (remainTarget == 0) {
-            result.add(new ArrayList<Integer>(combination));
-            return;
+    
+    private void bfsHelper(int[] candidates, 
+                           int startIndex, 
+                           int remainTarget,
+                           List<Integer> combination,
+                           List<List<Integer>> results){
+    
+        //exit
+        if(remainTarget == 0){
+            results.add(new ArrayList<Integer>(combination));
         }
-
-        for (int i = startIndex; i < candidates.length; i++) {
-            if (candidates[i] > remainTarget) break;
+        
+        // split
+        for(int i = startIndex; i < candidates.length; i++){
+            
+            if(remainTarget < candidates[i]) break;
             if(i != 0 && candidates[i] == candidates[i - 1]) continue;
-
             combination.add(candidates[i]);
-            dfs(candidates, i, remainTarget - candidates[i], combination, result);
+            bfsHelper(candidates, i, remainTarget - candidates[i], combination, results);
             combination.remove(combination.size() - 1);
         }
-    }
+                               
+   }
 }

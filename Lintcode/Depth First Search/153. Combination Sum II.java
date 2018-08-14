@@ -1,33 +1,39 @@
 public class Solution {
-    public  List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (candidates == null) return result;
+    /**
+     * @param num: Given the candidate numbers
+     * @param target: Given the target number
+     * @return: All the combinations that sum to target
+     */
+    public List<List<Integer>> combinationSum2(int[] nums, int target) {
+        // write your code here
+        List<List<Integer>> results = new ArrayList<>();
+        if(nums == null || nums.length == 0) return results;
         
-        List<Integer> combination = new ArrayList<>();
-        Arrays.sort(candidates);
-        dfs(candidates, 0, target, combination, result);
-
-        return result;
+        Arrays.sort(nums);
+        bfsHelper(nums, 0, target, new ArrayList<Integer>(), results);
+        return results;
+        
     }
-
-     void dfs(int[] candidates,
-                 int startIndex,
-                 int remainTarget,
-                 List<Integer> combination,
-                 List<List<Integer>> result) {
-                     
-        if (remainTarget == 0) {
-            result.add(new ArrayList<Integer>(combination));
-            return;
-        }
     
-        for (int i = startIndex; i < candidates.length; i++) {
-            if (candidates[i] > remainTarget) break;
-            if(i != 0 && candidates[i] == candidates[i - 1] && i > startIndex) continue;
-
-            combination.add(candidates[i]);
-            dfs(candidates, i + 1, remainTarget - candidates[i], combination, result);
+    private void bfsHelper(int[] nums,
+                           int startIndex,
+                           int remainTarget,
+                           List<Integer> combination,
+                           List<List<Integer>> results){
+        // exit
+        if(remainTarget == 0){
+            results.add(new ArrayList<Integer>(combination));
+        }
+        
+        // split
+        for(int i = startIndex; i < nums.length; i++){
+            
+            if(remainTarget < nums[i]) break;
+            if(i != 0 && nums[i] == nums[i - 1] && i > startIndex) continue;
+            combination.add(nums[i]);
+            bfsHelper(nums, i+1, remainTarget - nums[i], combination, results);
             combination.remove(combination.size() - 1);
         }
+                                   
     }
 }
