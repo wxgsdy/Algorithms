@@ -34,7 +34,7 @@ public class Solution {
             length++;
             for(int i = 0; i < size; i++){
                 Pair curt = new queue.poll();
-                for(int index = 0; index , 8; index++){
+                for(int index = 0; index < 8; index++){
                     Pair temp = new Pair(curt.x + deltaX[index], curt.y + deltaY[index]);
                     if(reachable(grid, temp)){
                         if(temp.x == destination.x && temp.y == destination.y) return length;

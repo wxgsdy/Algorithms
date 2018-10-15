@@ -26,11 +26,7 @@ class Solution {
             dfsHelper(s, i + 1, partition, results);
             partition.remove(partition.size() - 1);            
         }
-    }
-    
-    
-    
-    
+    }   
     
     
     private boolean isPalindrome(String s){

@@ -7,21 +7,22 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-class Solution {
-    public TreeNode invertTree(TreeNode root) {
-        
-        helper(root);
-        return root;
-    }
-    
-    private void helper(TreeNode root){
+public class Solution {
+    /**
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: nothing
+     */
+    public void invertBinaryTree(TreeNode root) {
+        // write your code here
         if(root == null) return;
         
         TreeNode temp = root.left;
         root.left = root.right;
         root.right = temp;
         
-        helper(root.left);
-        helper(root.right);
+        invertBinaryTree(root.left);
+        invertBinaryTree(root.right);
     }
+    
+
 }
